@@ -35,11 +35,11 @@ Autentica o usuário no sistema e retorna um token para autenticação.
 | ------ | ------------ |
 | POST   | api/sessions |
 
-| Tipo   | Parâmetros   | Valores |
-| ------ | ------------ | ------- |
-| HEADER | bearer_token | string  |
-| POST   | username     | string  |
-| POST   | password     | string  |
+| Tipo | Parâmetros   | Valores |
+| ---- | ------------ | ------- |
+| HEAD | bearer_token | string  |
+| POST | username     | string  |
+| POST | password     | string  |
 
 O parâmetro `bearer_token` deve ser enviado em todas as requisições do cliente. Ele permite que o servidor valide a origem da solicitação.
 
@@ -62,11 +62,15 @@ Desconecta o usuário do sistema.
 | ------ | ---- |
 |        |      |
 
-#### Resposta
-
 | Tipo | Parâmetros | Valores |
 | ---- | ---------- | ------- |
 |      |            |         |
+
+#### Resposta
+
+| Status | Resposta |
+| :----: | -------- |
+|        |          |
 
 ### 4. Listagem de filmes
 
@@ -74,15 +78,20 @@ Lista todos os filmes disponíveis para locação.
 
 #### Requisição
 
-| Método | URL  |
-| ------ | ---- |
-|        |      |
+| Método | URL        |
+| ------ | ---------- |
+| GET    | api/movies |
+
+| Tipo | Parâmetros   | Valores |
+| ---- | ------------ | ------- |
+| HEAD | bearer_token | string  |
 
 #### Resposta
 
-| Tipo | Parâmetros | Valores |
-| ---- | ---------- | ------- |
-|      |            |         |
+| Status | Resposta                                                     |
+| :----: | ------------------------------------------------------------ |
+|  200   | {<br />{<br />"Title": "Título do filme1",<br />"Director": "Diretor do filme1"<br />},<br />{<br />"Title": "Título do filme2",<br />"Director": "Diretor do filme2"<br />}<br />} |
+|  401   | {"error": "You're not authorized, please log in."}           |
 
 ### 5. Locação de filmes
 
@@ -94,11 +103,17 @@ Realiza o aluguel de um filme.
 | ------ | ---- |
 |        |      |
 
-#### Resposta
-
 | Tipo | Parâmetros | Valores |
 | ---- | ---------- | ------- |
 |      |            |         |
+
+#### Resposta
+
+| Status | Resposta                                           |
+| :----: | -------------------------------------------------- |
+|  200   |                                                    |
+|        |                                                    |
+|  401   | {"error": "You're not authorized, please log in."} |
 
 ### 6. Devolução de filmes
 
@@ -110,11 +125,16 @@ Realiza a devolução de um filme.
 | ------ | ---- |
 |        |      |
 
-#### Resposta
-
 | Tipo | Parâmetros | Valores |
 | ---- | ---------- | ------- |
 |      |            |         |
+
+#### Resposta
+
+| Status | Resposta                                           |
+| :----: | -------------------------------------------------- |
+|  200   |                                                    |
+|  401   | {"error": "You're not authorized, please log in."} |
 
 ### 7. Pesquisa por filmes
 
@@ -126,8 +146,13 @@ Pesquisa um filme pelo seu título.
 | ------ | ---- |
 |        |      |
 
-#### Resposta
-
 | Tipo | Parâmetros | Valores |
 | ---- | ---------- | ------- |
 |      |            |         |
+
+#### Resposta
+
+| Status | Resposta                                           |
+| :----: | -------------------------------------------------- |
+|  200   |                                                    |
+|  401   | {"error": "You're not authorized, please log in."} |
