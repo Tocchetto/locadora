@@ -1,19 +1,19 @@
 import Sequelize, { Model } from 'sequelize';
 
-class Movie extends Model {
+class Movies extends Model {
   static init(sequelize) {
     super.init(
       {
         title: Sequelize.STRING,
         director: Sequelize.STRING,
+        quantity: Sequelize.INTEGER,
         provider: Sequelize.BOOLEAN,
-        quantity: Sequelize.INTEGER
       },
       {
-        sequelize
+        sequelize,
       }
     );
   }
 }
 
-export default Movie;
+export default Movies;
