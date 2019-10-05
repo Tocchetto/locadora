@@ -30,12 +30,13 @@ class MovieController {
   }
 
   async show(req, res) {
-    const movies = await Movie.findAll({ where: { title: req.body.title } });
+    console.log(req);
+    const movies = await Movie.findAll({ where: { title: req.query.title } });
 
     if (!movies) {
       return res
         .status(400)
-        .json({ error: `The movie "${req.body.title}" does not exists.` });
+        .json({ error: `The movie "${req.query.title}" does not exists.` });
     }
 
     return res.json(movies);

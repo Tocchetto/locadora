@@ -7,12 +7,18 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      Id_User: {
+      id_user: {
         type: Sequelize.INTEGER,
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         allowNull: false,
       },
-      Id_Movie: {
+      id_movie: {
         type: Sequelize.INTEGER,
+        references: { model: 'movies', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         allowNull: false,
       },
       quantity: {
@@ -22,6 +28,14 @@ module.exports = {
       provider: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
+        allowNull: false,
+      },
+      rented_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      returned_at: {
+        type: Sequelize.DATE,
         allowNull: false,
       },
       created_at: {

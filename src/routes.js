@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
+import RentController from './app/controllers/RentController';
 
 import MovieController from './app/controllers/MovieController';
 
@@ -19,5 +20,7 @@ routes.put('/users', UserController.update);
 routes.post('/movies', MovieController.store);
 routes.get('/movies', MovieController.index);
 routes.get('/movie', MovieController.show);
+
+routes.post('/rents', RentController.store);
 
 export default routes;
