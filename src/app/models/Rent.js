@@ -4,9 +4,9 @@ class Rent extends Model {
   static init(sequelize) {
     super.init(
       {
-        quantity: Sequelize.INTEGER,
         rented_at: Sequelize.DATE,
         returned_at: Sequelize.DATE,
+        quantity: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -16,8 +16,8 @@ class Rent extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: 'user_id' });
-    this.belongsTo(models.Disk, { foreignKey: 'disk_id' });
+    this.belongsTo(models.User, { foreignKey: 'id_user' });
+    this.belongsTo(models.Movie, { foreignKey: 'id_movie' });
   }
 }
 

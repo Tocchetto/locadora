@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('rent', {
+    return queryInterface.createTable('rents', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -25,18 +25,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      provider: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
-        allowNull: false,
-      },
       rented_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
       returned_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -50,6 +45,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('rent');
+    return queryInterface.dropTable('rents');
   },
 };

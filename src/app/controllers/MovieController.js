@@ -30,7 +30,6 @@ class MovieController {
   }
 
   async show(req, res) {
-    console.log(req);
     const movies = await Movie.findAll({ where: { title: req.query.title } });
 
     if (!movies) {
