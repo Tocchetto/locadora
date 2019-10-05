@@ -22,5 +22,6 @@ routes.get('/movies', MovieController.index);
 routes.get('/movie', MovieController.show);
 
 routes.post('/rents', RentController.store);
+routes.put('/rents', RentController.update);
 
 export default routes;
