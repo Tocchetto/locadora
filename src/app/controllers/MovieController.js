@@ -28,6 +28,18 @@ class MovieController {
       quantity,
     });
   }
+
+  async show(req, res) {
+    const movies = await Movie.findAll({ where: { title: req.body.title } });
+
+    if (!movies) {
+      return res
+        .status(400)
+        .json({ error: `The movie "${req.body.title}" does not exists.` });
+    }
+
+    return res.json(movies);
+  }
 }
 
 export default new MovieController();

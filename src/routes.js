@@ -18,5 +18,6 @@ routes.put('/users', UserController.update);
 
 routes.post('/movies', MovieController.store);
 routes.get('/movies', MovieController.index);
+routes.get('/movie', MovieController.show);
 
 export default routes;
