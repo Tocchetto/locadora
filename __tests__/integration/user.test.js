@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import app from '../../src/app';
 
 import User from '../../src/app/models/User';
-import Movie from '../../src/app/models/Movie';
 import truncate from '../util/truncate';
 
 describe('User', () => {

@@ -21,7 +21,7 @@ class MovieController {
 
     const { id, title, director, quantity } = await Movie.create(req.body);
 
-    return res.json({
+    return res.status(200).json({
       id,
       title,
       director,
@@ -38,7 +38,7 @@ class MovieController {
         .json({ error: `The movie "${req.query.title}" does not exists.` });
     }
 
-    return res.json(movies);
+    return res.status(200).json(movies);
   }
 }
 
