@@ -14,8 +14,8 @@ Cria um novo usuário no sistema.
   ```json
   {
       "name": "Guilherme Zanatta Tocchetto",
-  	"email": "tocchettoo@gmail.com",
-  	"password": "senhasegura"
+      "email": "tocchettoo@gmail.com",
+      "password": "senhasegura"
   }
   ```
 
