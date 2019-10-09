@@ -19,6 +19,10 @@ class RentController {
 
     const movie = await Movie.findByPk(id_movie);
 
+    if (!movie) {
+      return res.status(400).json({ error: 'Movie does not exists.' });
+    }
+
     if (movie.quantity - req.body.quantity < 0) {
       return res
         .status(400)

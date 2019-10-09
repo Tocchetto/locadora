@@ -19,72 +19,14 @@ Cria um novo usuário no sistema.
   }
   ```
 
-#### Posible responses:
+#### Possible responses:
 
 - **Success response**
 
   - **Code:** 200 _OK_
+  - **Content:** `{"id": 1, "name": "Guilherme Zanatta Tocchetto", "email": "tocchettoo@gmail.com" }`
 
-  - **Content:**
-
-    ```json
-    {
-      "id": 1,
-      "name": "Guilherme Zanatta Tocchetto",
-      "email": "tocchettoo@gmail.com"
-    }
-    ```
-
-- **Error response**
-
-  - **Code:** 400 _BAD REQUEST_
-
-  - **Content:** 
-
-    ```json
-    {
-    	"error": "Validation failed."
-    }
-    ```
-
-  OR
-
-  - **Code:** 400 _BAD REQUEST_
-
-  - **Content:**
-
-    ```json
-    {
-    	"error": "This email is already taken."
-    }
-    ```
-
-### 2. Edição das informações do usuário
-
-##### `PUT` → /users
-
-Edita as informações de um usuário já existente na base de dados.
-
-- **Corpo da requisição**
-
-  ```json
-  {
-  	"name": "Guilherme Zanatta Tocchetto",
-  	"email": "tocchettoo2@gmail.com",
-  	"oldPassword": "senhasegura",
-  	"confirmPassword": "novasenhasegura",
-  	"password": "novasenhasegura"
-  }
-  ```
-
-#### Posible responses:
-
-- **Success response**
-
-  - **Code:** 200 _OK_
-  - **Content:** `{"id": 1, "name": "Guilherme Zanatta Tocchetto", "email": "tocchettoo2@gmail.com"}`
-
-- **Error response**
+- **Error responses**
 
   - **Code:** 400 _BAD REQUEST_
   - **Content:** `{"error": "Validation failed"`
@@ -94,134 +36,297 @@ Edita as informações de um usuário já existente na base de dados.
   - **Code:** 400 _BAD REQUEST_
   - **Content:** `{"error": "This email is already taken."}`
 
-### 2. Login do usuário
+- **Chamada de exemplo:**
+
+  `curl -d '{"name":"Guilherme Zanatta Tocchetto", "email":"tocchettoo@gmail.com", "password": "senhasegura"}' -H "Content-Type: application/json" -X POST http://localhost:3333/users`
+
+-------------------
+
+### 2. Logon do usuário
+
+##### `POST` → /sessions
 
 Autentica o usuário no sistema e retorna um token para autenticação.
 
-#### Requisição
+- **Corpo da requisição**
 
-| Método | URL          |
-| ------ | ------------ |
-| POST   | api/sessions |
+  ```json
+  {
+  	"email": "tocchettoo@gmail.com",
+  	"oldPassword": "senhasegura"
+  }
+  ```
 
-| Tipo | Parâmetros   | Valores |
-| ---- | ------------ | ------- |
-| HEAD | bearer_token | string  |
-| POST | username     | string  |
-| POST | password     | string  |
+#### Possible responses:
 
-O parâmetro `bearer_token` deve ser enviado em todas as requisições do cliente. Ele permite que o servidor valide a origem da solicitação.
+- **Success response**
 
-#### Resposta
+  - **Code:** 200 _OK_
+  - **Content:** `{"id": 1, "name": "Guilherme Zanatta Tocchetto", "email": "tocchettoo2@gmail.com", "token": <bearer token>}`
 
-| Status | Resposta                                                     |
-| :----: | :----------------------------------------------------------- |
-|  200   | {<br />  "user": {<br />    "id": 1,<br />    "name": "Guilherme"<br />    "email": "email@mail.com"<br />  },<br />  "token": <bearer_token><br />} |
-|  400   | {"error": "Validation failed."}                              |
-|  401   | {"error": "User not found."}                                 |
-|  401   | {"error": " Password does not match."}                       |
+- **Error responses**
 
-### 3. Logoff do usuário
+  - **Code:** 401 _BAD REQUEST_
+  - **Content:** `{"error": "Password does not match."`
 
-Desconecta o usuário do sistema.
+  OR
 
-#### Requisição
+  - **Code:** 401 _BAD REQUEST_
+  - **Content:** `{"error": "This email is not registered."}`
 
-| Método | URL  |
-| ------ | ---- |
-|        |      |
+- **Chamada de exemplo:**
 
-| Tipo | Parâmetros | Valores |
-| ---- | ---------- | ------- |
-|      |            |         |
+  `curl -d '{"email":"tocchettoo@gmail.com", "password": "senhasegura"}' -H "Content-Type: application/json" -X POST http://localhost:3333/sessions`
 
-#### Resposta
+- **Observação:**
 
-| Status | Resposta |
-| :----: | -------- |
-|        |          |
+  O parâmetro `bearer_token` que é retornado no corpo dessa requisição deve ser enviado no header de todas as próximas requisições do cliente listadas abaixo, é através dele que o servidor irá fazer a validação da sessão do usuário.
 
-### 4. Listagem de filmes
+------------------------
 
-Lista todos os filmes disponíveis para locação.
+### 3. Edição das informações do usuário
 
-#### Requisição
+##### `PUT` → /users
 
-| Método | URL        |
-| ------ | ---------- |
-| GET    | api/movies |
+Edita as informações de um usuário já existente no sistema.
 
-| Tipo | Parâmetros   | Valores |
-| ---- | ------------ | ------- |
-| HEAD | bearer_token | string  |
+- **Corpo da requisição**
 
-#### Resposta
+  ```json
+  {
+  	"name": "Guilherme Zanatta Tocchetto",
+  	"email": "tocchettoo2@gmail.com",
+  	"oldPassword": "senhasegura",
+      "password": "novasenhasegura",
+  	"confirmPassword": "novasenhasegura"
+  }
+  ```
 
-| Status | Resposta                                                     |
-| :----: | ------------------------------------------------------------ |
-|  200   | {<br />{<br />"Title": "Título do filme1",<br />"Director": "Diretor do filme1"<br />},<br />{<br />"Title": "Título do filme2",<br />"Director": "Diretor do filme2"<br />}<br />} |
-|  401   | {"error": "You're not authorized, please log in."}           |
+  ###### Obs.: O parâmetro `bearer_token` deve ser enviado no header dessa requisição.
 
-### 5. Locação de filmes
+#### Possible responses:
 
-Realiza o aluguel de um filme.
+- **Success response**
 
-#### Requisição
+  - **Code:** 200 _OK_
+  - **Content:** `{"id": 1, "name": "Guilherme Zanatta Tocchetto", "email": "tocchettoo2@gmail.com"}`
 
-| Método | URL  |
-| ------ | ---- |
-|        |      |
+- **Error responses**
 
-| Tipo | Parâmetros | Valores |
-| ---- | ---------- | ------- |
-|      |            |         |
+  - **Code:** 400 _BAD REQUEST_
+  - **Content:** `{"error": "Validation failed"`
 
-#### Resposta
+  OR
 
-| Status | Resposta                                           |
-| :----: | -------------------------------------------------- |
-|  200   |                                                    |
-|        |                                                    |
-|  401   | {"error": "You're not authorized, please log in."} |
+  - **Code:** 400 _BAD REQUEST_
+  - **Content:** `{"error": "This email is already taken."}`
 
-### 6. Devolução de filmes
+  OR
+
+  - **Code:** 401 _UNAUTHORIZED_
+  - **Content:** `{"error": "Old password does not match."}`
+
+  OR
+
+  - **Code:** 401 _UNAUTHORIZED_
+  - **Content:** `{"error": "Invalid token."}`
+
+- **Chamada de exemplo:**
+
+  `curl -d '{"name":"Guilherme Zanatta Tocchetto", "email":"tocchettoo@gmail.com", "oldPassword": "senhasegura", "password": "novasenhasegura", "confirmPassword": "novasenhasegura"}' -H "Content-Type: application/json" -H "Authorization: Bearer <bearer_token>" -X PUT http://localhost:3333/users`
+
+------------------
+
+### 4. Criação de um filme
+
+##### `POST` → /movies
+
+Registra um novo filme no sistema.
+
+- **Corpo da requisição**
+
+  ```json
+  {
+  	"title": "The Boy Who Harnessed the Wind",
+  	"director": "Chiwetel Ejiofor",
+  	"quantity": 2
+  }
+  ```
+
+  ###### Obs.: O parâmetro `bearer_token` deve ser enviado no header dessa requisição.
+
+#### Possible responses:
+
+- **Success response**
+
+  - **Code:** 200 _OK_
+  - **Content:** `{"id": 1, "title": "The Boy Who Harnessed the Wind", "director": "Chiwetel Ejiofor", "quantity": 2}`
+
+- **Error responses**
+
+  - **Code:** 400 _BAD REQUEST_
+  - **Content:** `{"error": "Validation failed"`
+
+  OR
+
+  - **Code:** 401 _UNAUTHORIZED_
+  - **Content:** `{"error": "Invalid token."}`
+
+- **Chamada de exemplo:**
+
+  `curl -d '{"id": 1, "title": "The Boy Who Harnessed the Wind", "director": "Chiwetel Ejiofor", "quantity": 2}' -H "Content-Type: application/json" -H "Authorization: Bearer <bearer_token>" -X POST http://localhost:3333/movies`
+
+---------------------
+
+### 5. Listagem de um filme
+
+##### `GET` → /movie?title=\<titulo_do_filme\>
+
+Retorna um filme do sistema 
+
+- **Corpo da requisição**
+
+  `Vazio`
+
+  ###### Obs.: O parâmetro `bearer_token` deve ser enviado no header dessa requisição.
+
+#### Possible responses:
+
+- **Success response**
+
+  - **Code:** 200 _OK_
+  - **Content:** `{"id": 1, "title": "The Boy Who Harnessed the Wind", "director": "Chiwetel Ejiofor", "quantity": 2, "createdAt": "2019-10-09T05:29:26.506Z", "updatedAt": "2019-10-09T05:29:26.506Z"}`
+
+- **Error responses**
+
+  - **Code:** 400 _BAD REQUEST_
+  - **Content:** `{"error": "Movie does not exists"`
+
+  OR
+
+  - **Code:** 401 _UNAUTHORIZED_
+  - **Content:** `{"error": "Invalid token."}`
+
+- **Chamada de exemplo:**
+
+  `curl -H "Content-Type: application/json" -H "Authorization: Bearer <bearer_token>" -X GET http://localhost:3333/movie?title=The%20Boy%20Who%20Harnessed%20the%20Wind`
+
+----------------
+
+### 6. Listagem de todos os filmes
+
+##### `GET` → /movies
+
+Retorna todos os filmes cadastrados no sistema 
+
+- **Corpo da requisição**
+
+  `Vazio`
+
+  ###### Obs.: O parâmetro `bearer_token` deve ser enviado no header dessa requisição.
+
+#### Possible responses:
+
+- **Success response**
+
+  - **Code:** 200 _OK_
+  - **Content:** `[{"id": 1, "title": "The Boy Who Harnessed the Wind", "director": "Chiwetel Ejiofor", "quantity": 2, "createdAt": "2019-10-09T05:29:26.506Z", "updatedAt": "2019-10-09T05:29:26.506Z"}]`
+
+- **Chamada de exemplo:**
+
+  `curl -H "Content-Type: application/json" -H "Authorization: Bearer <bearer_token>" -X GET http://localhost:3333/movies`
+
+-------------
+
+### 7. Locação de um filme
+
+##### `POST` → /rents
+
+Cria uma locação e vincula a mesma a um usuário.
+
+- **Corpo da requisição**
+
+  ```json
+  {
+  	"id_movie": 1,
+  	"quantity": 2
+  }
+  ```
+
+  ###### Obs.: O parâmetro `bearer_token` deve ser enviado no header dessa requisição.
+
+#### Possible responses:
+
+- **Success response**
+
+  - **Code:** 200 _OK_
+  - **Content:** `{"id": 1, "id_user": 1, "rented_at": "2019-10-09T06:03:51.363Z", "returned_at": null, "id_movie": 1, "quantity": 2, "updatedAt": "2019-10-09T06:03:51.364Z", "createdAt": "2019-10-09T06:03:51.364Z"}`
+
+- **Error responses**
+
+  - **Code:** 400 _BAD REQUEST_
+  - **Content:** `{"error": "Validation failed"`
+
+  OR
+
+  - **Code:** 400 _BAD REQUEST_
+  - **Content:** `{"error": "Movie does not exists"`
+
+  OR
+
+  - **Code:** 400 _BAD REQUEST_
+  - **Content:** `{"error": "There are no copies available for this movie"`
+
+  OR
+
+  - **Code:** 401 _UNAUTHORIZED_
+  - **Content:** `{"error": "Invalid token."}`
+
+- **Chamada de exemplo:**
+
+  `curl -d '{"id_movie": 1, "quantity": 2}' -H "Content-Type: application/json" -H "Authorization: Bearer <bearer_token>" -X POST http://localhost:3333/rents`
+
+-------------
+
+### 8. Locação de um filme
+
+##### `PUT` → /rents
 
 Realiza a devolução de um filme.
 
-#### Requisição
+- **Corpo da requisição**
 
-| Método | URL  |
-| ------ | ---- |
-|        |      |
+  ```json
+  {
+  	"id_movie": 1,
+  	"quantity": 2
+  }
+  ```
 
-| Tipo | Parâmetros | Valores |
-| ---- | ---------- | ------- |
-|      |            |         |
+  ###### Obs.: O parâmetro `bearer_token` deve ser enviado no header dessa requisição.
 
-#### Resposta
+#### Possible responses:
 
-| Status | Resposta                                           |
-| :----: | -------------------------------------------------- |
-|  200   |                                                    |
-|  401   | {"error": "You're not authorized, please log in."} |
+- **Success response**
 
-### 7. Pesquisa por filmes
+  - **Code:** 200 _OK_
+  - **Content:** `{"id": 1, "rented_at": "2019-10-09T05:58:30.494Z", "returned_at": "2019-10-09T06:03:37.082Z", "quantity": 2, "createdAt": "2019-10-09T05:58:30.494Z", "updatedAt": "2019-10-09T06:03:37.082Z", "id_user": 1, "id_movie": 1}`
 
-Pesquisa um filme pelo seu título.
+- **Error responses**
 
-#### Requisição
+  - **Code:** 400 _BAD REQUEST_
+  - **Content:** `{"error": "Validation failed"`
 
-| Método | URL  |
-| ------ | ---- |
-|        |      |
+  OR
 
-| Tipo | Parâmetros | Valores |
-| ---- | ---------- | ------- |
-|      |            |         |
+  - **Code:** 400 _BAD REQUEST_
+  - **Content:** `{"error": "This rent does not exists"`
 
-#### Resposta
+  OR
 
-| Status | Resposta                                           |
-| :----: | -------------------------------------------------- |
-|  200   |                                                    |
-|  401   | {"error": "You're not authorized, please log in."} |
+  - **Code:** 401 _UNAUTHORIZED_
+  - **Content:** `{"error": "Invalid token."}`
+
+- **Chamada de exemplo:**
+
+  `curl -d '{"id_movie": 1, "quantity": 2}' -H "Content-Type: application/json" -H "Authorization: Bearer <bearer_token>" -X PUT http://localhost:3333/rents`
