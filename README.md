@@ -12,7 +12,7 @@ Este repositório contém um sistema de uma locadora de filmes. O sistema possui
 
 ## Configurações do ambiente
 
-Neste projeto, o [docker CE](https://docs.docker.com/install/linux/docker-ce/debian/) (Community Edition) foi utilizado para fazer o gerenciamento dos serviços da aplicação (banco de dados), mas nada impede que a instalação dos mesmos sejam feitos no host.
+Neste projeto, o [docker CE](https://docs.docker.com/install/linux/docker-ce/debian/) (Community Edition) foi utilizado para fazer o gerenciamento do banco de dados, mas nada impede que a instalação do mesmo seja feita no host.
 
 Após a intalação do docker CE, é preciso criar uma instância do postgres como descrito no site do [docker hub](https://hub.docker.com/_/postgres), isso pode ser feito através do comando `docker run --name database -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres`.
 
