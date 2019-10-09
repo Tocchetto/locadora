@@ -3,27 +3,61 @@
 
 ## Especificação da API webservice
 
-### 1. Criação de usuário
+### 1. Criação de usuário 
+
+##### `POST` → /users
 
 Cria um novo usuário no sistema.
 
-| Método | URL       |
-| ------ | --------- |
-| POST   | api/users |
+- **Corpo da requisição**
 
-| Tipo | Parâmetros | Valores |
-| ---- | ---------- | ------- |
-| POST | name       | string  |
-| POST | email      | string  |
-| POST | password   | string  |
+  ```json
+  {
+      "name": "Guilherme Zanatta Tocchetto",
+  	"email": "tocchettoo@gmail.com",
+  	"password": "senhasegura"
+  }
+  ```
 
-#### Resposta
+#### Posible responses:
 
-| Status | Resposta                                                     |
-| :----: | ------------------------------------------------------------ |
-|  200   | {<br />  "id": 1,<br />  "name": "Guilherme",<br />  "email": "email@mail.com"<br />} |
-|  400   | {"error": "Validation failed."}                              |
-|  400   | {"error": " User already exists."}                           |
+- **Success response**
+
+  - **Code:** 200 _OK_
+
+  - **Content:**
+
+    ```json
+    {
+      "id": 1,
+      "name": "Guilherme Zanatta Tocchetto",
+      "email": "tocchettoo@gmail.com"
+    }
+    ```
+
+- **Error response**
+
+  - **Code:** 400 _BAD REQUEST_
+
+  - **Content:** 
+
+    ```json
+    {
+    	"error": "Validation failed."
+    }
+    ```
+
+  OR
+
+  - **Code:** 400 _BAD REQUEST_
+
+  - **Content:**
+
+    ```json
+    {
+    	"error": "This email is already taken."
+    }
+    ```
 
 ### 2. Login do usuário
 
