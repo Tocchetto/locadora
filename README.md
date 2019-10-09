@@ -1,15 +1,12 @@
-# Locadora
+# Locadora - Pré-requisitos
+
 ###### Exercício de Seleção - Desenvolvedor Back-End NodeJS
 
-## Pré-requisitos
-
-O [docker CE](https://docs.docker.com/install/linux/docker-ce/debian/) (Community Edition) foi utilizado para fazer o gerenciamento dos serviços da aplicação, mas nada impede que a instalação dos mesmos seja feita no host.
+O [docker CE](https://docs.docker.com/install/linux/docker-ce/debian/) (Community Edition) foi utilizado para fazer o gerenciamento dos serviços da aplicação (banco de dados), mas nada impede que a instalação dos mesmos sejam feitos no host.
 
 Após a intalação do docker CE, é preciso criar uma instância do postgres como descrito no site do [docker hub](https://hub.docker.com/_/postgres), isso pode ser feito através do comando `docker run --name database -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres`.
 
-###### Obs.: A flag -p vai fazer um redirecionamento da porta 5432 do host para o container
-
-###### Obs. 2: Durante a criação da instância do postgres pode ser que o container do docker não permaneça rodando após ter sido criado, caso isso aconteça, desabilitar o _apparmor_ deve resolver o problema. [Descrição + Solução do problema](https://stackoverflow.com/questions/57873532/unable-to-start-docker-container-docker-ps-a-status-exited-1)
+###### Obs.: Durante a criação da instância do postgres pode ser que o container do docker não permaneça rodando após ter sido criado, caso isso aconteça, desabilitar o _apparmor_ deve resolver o problema. [Descrição + Solução do problema](https://stackoverflow.com/questions/57873532/unable-to-start-docker-container-docker-ps-a-status-exited-1)
 
 O seguinte projeto foi todo desenvolvido utilizando nodejs e o gerenciador de pacotes [yarn](https://yarnpkg.com/lang/en/) foi utilizado para gerenciar as dependências do projeto.
 
@@ -19,11 +16,9 @@ Para rodar o servidor basta executar o comando `yarn dev`.
 
 ### Sequelize
 
-Para realizar requisições a partir das migrations disponíveis neste projeto, a existência de um banco que condiga com o nome descrito no arquivo `.env` já deve existir (nesse caso o nome do banco é _locadora_), após isso, basta rodar o comando `yarn sequelize db:migrate` que irá criar as tabelas utilizadas nesse projeto no banco, isso é feito a partir das definições disponíveis no arquivo dentro da pasta migrations `src/database/migrations`, que nesse caso, faz referência a uma tabela de usuário, filmes e locações.
+O banco de dados desse projeto foi desenvolvido utilizando o sequelize. Para montar sua estrutura, é necessário criar um banco que condiga com o nome descrito no arquivo [`.env`](./.env) (nesse caso o nome do banco é _locadora_), após isso, basta rodar o comando `yarn sequelize db:migrate` que irá criar as tabelas utilizadas nesse projeto. Esse processo é realizado a partir das definições disponíveis no arquivo que está na pasta [migrations](./src/database/migrations), que nesse caso, faz referência a uma tabela de usuário, filmes e locações.
 
-[Script SQL de criação do banco](/locadora.pgsql)
-
-[Modelo de requisições da aplicação no formato JSON](/Insomnia.json)
+[Script SQL para criação do banco de dados sem o sequelize](/locadora.pgsql)
 
 ### Testes
 
@@ -32,6 +27,8 @@ Foram feitos alguns testes de integração que podem ser encontrados [aqui](./__
 Para rodar os testes basta executar o comando `yarn test` na raiz do projeto.
 
 ## Especificação da API webservice
+
+[Modelo de requisições da aplicação no formato JSON](/Insomnia.json)
 
 ### 1. Criação de um usuário 
 
