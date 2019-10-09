@@ -59,6 +59,41 @@ Cria um novo usuário no sistema.
     }
     ```
 
+### 2. Edição das informações do usuário
+
+##### `PUT` → /users
+
+Edita as informações de um usuário já existente na base de dados.
+
+- **Corpo da requisição**
+
+  ```json
+  {
+  	"name": "Guilherme Zanatta Tocchetto",
+  	"email": "tocchettoo2@gmail.com",
+  	"oldPassword": "senhasegura",
+  	"confirmPassword": "novasenhasegura",
+  	"password": "novasenhasegura"
+  }
+  ```
+
+#### Posible responses:
+
+- **Success response**
+
+  - **Code:** 200 _OK_
+  - **Content:** `{"id": 1, "name": "Guilherme Zanatta Tocchetto", "email": "tocchettoo2@gmail.com"}`
+
+- **Error response**
+
+  - **Code:** 400 _BAD REQUEST_
+  - **Content:** `{"error": "Validation failed"`
+
+  OR
+
+  - **Code:** 400 _BAD REQUEST_
+  - **Content:** `{"error": "This email is already taken."}`
+
 ### 2. Login do usuário
 
 Autentica o usuário no sistema e retorna um token para autenticação.
