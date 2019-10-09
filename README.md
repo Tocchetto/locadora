@@ -19,11 +19,17 @@ Para rodar o servidor basta executar o comando `yarn dev`.
 
 ### Sequelize
 
-Para realizar requisições a partir das migrations disponíveis neste projeto, a existência de um banco que condiga com o nome descrito no arquivo `api/src/config/database.js` já deve existir (nesse caso o nome do banco é _locadora_), após isso, basta rodar o comando `yarn sequelize db:migrate` que irá criar as tabelas utilizadas nesse projeto no banco, isso é feito a partir das definições disponíveis no arquivo dentro da pasta migrations `src/database/migrations`, que nesse caso, faz referência a uma tabela de usuário, filmes e locações.
+Para realizar requisições a partir das migrations disponíveis neste projeto, a existência de um banco que condiga com o nome descrito no arquivo `.env` já deve existir (nesse caso o nome do banco é _locadora_), após isso, basta rodar o comando `yarn sequelize db:migrate` que irá criar as tabelas utilizadas nesse projeto no banco, isso é feito a partir das definições disponíveis no arquivo dentro da pasta migrations `src/database/migrations`, que nesse caso, faz referência a uma tabela de usuário, filmes e locações.
 
 [Script SQL de criação do banco](/locadora.pgsql)
 
 [Modelo de requisições da aplicação no formato JSON](/Insomnia.json)
+
+### Testes
+
+Foram feitos alguns testes de integração que podem ser encontrados [aqui](./__tests__/integration). Todos os testes realizados nesse projeto englobam apenas as rotas que não precisam do token de autenticação do usuário para serem acessadas.
+
+Para rodar os testes basta executar o comando `yarn test` na raiz do projeto.
 
 ## Especificação da API webservice
 
