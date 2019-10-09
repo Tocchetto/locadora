@@ -1,8 +1,18 @@
-# Locadora - Pré-requisitos
+# Locadora
 
 ###### Exercício de Seleção - Desenvolvedor Back-End NodeJS
 
-O [docker CE](https://docs.docker.com/install/linux/docker-ce/debian/) (Community Edition) foi utilizado para fazer o gerenciamento dos serviços da aplicação (banco de dados), mas nada impede que a instalação dos mesmos sejam feitos no host.
+Este repositório contém um sistema de uma locadora de filmes. O sistema possui as seguintes características: 
+
+- O sistema deve permitir a criação de usuários (clientes), logon e logoff de um usuário, listagem de filmes disponíveis, locação de um filme, devolução de um filme, e pesquisa de filme pelo título;
+- Um filme deve possuir um título e um diretor;
+- A locadora pode possuir múltiplas cópias de um mesmo filme;
+- Um usuário deve possuir um e-mail para se identificar no sistema, um nome (para exibição) e uma senha;
+- O sistema pode ser acessado concorrentemente por múltiplos usuários, que competirão pela locação dos filmes.
+
+## Configurações do ambiente
+
+Neste projeto, o [docker CE](https://docs.docker.com/install/linux/docker-ce/debian/) (Community Edition) foi utilizado para fazer o gerenciamento dos serviços da aplicação (banco de dados), mas nada impede que a instalação dos mesmos sejam feitos no host.
 
 Após a intalação do docker CE, é preciso criar uma instância do postgres como descrito no site do [docker hub](https://hub.docker.com/_/postgres), isso pode ser feito através do comando `docker run --name database -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres`.
 
