@@ -184,8 +184,6 @@ COPY public."SequelizeMeta" (name) FROM stdin;
 --
 
 COPY public.movies (id, title, director, quantity, created_at, updated_at) FROM stdin;
-1	The Boy Who Harnessed the Wind	Chiwetel Ejiofor	4	2019-10-05 23:05:41.487+00	2019-10-05 23:05:41.487+00
-2	The Boy in the Striped Pajamas	Mark Herman	6	2019-10-05 23:10:25.252+00	2019-10-05 23:10:25.252+00
 \.
 
 
@@ -202,8 +200,6 @@ COPY public.rents (id, id_user, id_movie, quantity, rented_at, returned_at, crea
 --
 
 COPY public.users (id, name, email, password_hash, created_at, updated_at) FROM stdin;
-1	Guilherme Zanatta Tocchetto	tocchettoo@gmail.com	$2a$08$9ymMVLPWTSK0Zb5218tgYeBpncyU.Mnv.pLwAnuERvmOfhfcabmDy	2019-10-05 23:03:45.517+00	2019-10-05 23:03:45.517+00
-2	Felipe Sereno Soso	felipeserenososo@gmail.com	$2a$08$tRm2hIIb9Ed19z1NGaSEAe3TmN8jHiJncsT0z4CNwyGhHH9di47Ji	2019-10-05 23:12:39.459+00	2019-10-05 23:12:39.459+00
 \.
 
 
@@ -211,7 +207,7 @@ COPY public.users (id, name, email, password_hash, created_at, updated_at) FROM 
 -- Name: movies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.movies_id_seq', 2, true);
+SELECT pg_catalog.setval('public.movies_id_seq', 1, false);
 
 
 --
@@ -225,7 +221,7 @@ SELECT pg_catalog.setval('public.rents_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 2, true);
+SELECT pg_catalog.setval('public.users_id_seq', 1, false);
 
 
 --

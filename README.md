@@ -1,9 +1,33 @@
 # Locadora
 ###### Exercício de Seleção - Desenvolvedor Back-End NodeJS
 
+## Pré-requisitos
+
+O [docker CE](https://docs.docker.com/install/linux/docker-ce/debian/) (Community Edition) foi utilizado para fazer o gerenciamento dos serviços da aplicação, mas nada impede que a instalação dos mesmos seja feita no host.
+
+Após a intalação do docker CE, é preciso criar uma instância do postgres como descrito no site do [docker hub](https://hub.docker.com/_/postgres), isso pode ser feito através do comando `docker run --name database -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres`.
+
+###### Obs.: A flag -p vai fazer um redirecionamento da porta 5432 do host para o container
+
+###### Obs. 2: Durante a criação da instância do postgres pode ser que o container do docker não permaneça rodando após ter sido criado, caso isso aconteça, desabilitar o _apparmor_ deve resolver o problema. [Descrição + Solução do problema](https://stackoverflow.com/questions/57873532/unable-to-start-docker-container-docker-ps-a-status-exited-1)
+
+O seguinte projeto foi todo desenvolvido utilizando nodejs e o gerenciador de pacotes [yarn](https://yarnpkg.com/lang/en/) foi utilizado para gerenciar as dependências do projeto.
+
+Com yarn instalado, basta clonar o repositório localmente `git clone https://github.com/Tocchetto/locadora.git`, entrar na pasta **locadora** `cd locadora` e utilizar o comando `yarn` para instalar as dependências do projeto.
+
+Para rodar o servidor basta executar o comando `yarn dev`.
+
+### Sequelize
+
+Para realizar requisições a partir das migrations disponíveis neste projeto, a existência de um banco que condiga com o nome descrito no arquivo `api/src/config/database.js` já deve existir (nesse caso o nome do banco é _locadora_), após isso, basta rodar o comando `yarn sequelize db:migrate` que irá criar as tabelas utilizadas nesse projeto no banco, isso é feito a partir das definições disponíveis no arquivo dentro da pasta migrations `src/database/migrations`, que nesse caso, faz referência a uma tabela de usuário, filmes e locações.
+
+[Script SQL de criação do banco](/locadora.pgsql)
+
+[Modelo de requisições da aplicação no formato JSON](/Insomnia.json)
+
 ## Especificação da API webservice
 
-### 1. Criação de usuário 
+### 1. Criação de um usuário 
 
 ##### `POST` → /users
 
@@ -94,11 +118,11 @@ Edita as informações de um usuário já existente no sistema.
 
   ```json
   {
-  	"name": "Guilherme Zanatta Tocchetto",
-  	"email": "tocchettoo2@gmail.com",
-  	"oldPassword": "senhasegura",
+      "name": "Guilherme Zanatta Tocchetto",
+      "email": "tocchettoo2@gmail.com",
+      "oldPassword": "senhasegura",
       "password": "novasenhasegura",
-  	"confirmPassword": "novasenhasegura"
+      "confirmPassword": "novasenhasegura"
   }
   ```
 
@@ -207,6 +231,11 @@ Retorna um filme do sistema
   - **Code:** 401 _UNAUTHORIZED_
   - **Content:** `{"error": "Invalid token."}`
 
+  OR
+
+  - **Code:** 401 _UNAUTHORIZED_
+  - **Content:** `{"error": "Token not provided"}`
+
 - **Chamada de exemplo:**
 
   `curl -H "Content-Type: application/json" -H "Authorization: Bearer <bearer_token>" -X GET http://localhost:3333/movie?title=The%20Boy%20Who%20Harnessed%20the%20Wind`
@@ -231,6 +260,16 @@ Retorna todos os filmes cadastrados no sistema
 
   - **Code:** 200 _OK_
   - **Content:** `[{"id": 1, "title": "The Boy Who Harnessed the Wind", "director": "Chiwetel Ejiofor", "quantity": 2, "createdAt": "2019-10-09T05:29:26.506Z", "updatedAt": "2019-10-09T05:29:26.506Z"}]`
+
+- **Error response**
+
+  - **Code:** 401 _UNAUTHORIZED_
+  - **Content:** `{"error": "Invalid token."}`
+
+  OR
+
+  - **Code:** 401 _UNAUTHORIZED_
+  - **Content:** `{"error": "Token not provided"}`
 
 - **Chamada de exemplo:**
 
@@ -280,7 +319,12 @@ Cria uma locação e vincula a mesma a um usuário.
   OR
 
   - **Code:** 401 _UNAUTHORIZED_
-  - **Content:** `{"error": "Invalid token."}`
+  - **Content:** `{"error": "Invalid token"}`
+
+  OR
+
+  - **Code:** 401 _UNAUTHORIZED_
+  - **Content:** `{"error": "Token not provided"}`
 
 - **Chamada de exemplo:**
 
@@ -325,7 +369,12 @@ Realiza a devolução de um filme.
   OR
 
   - **Code:** 401 _UNAUTHORIZED_
-  - **Content:** `{"error": "Invalid token."}`
+  - **Content:** `{"error": "Invalid token"}`
+
+  OR
+
+  - **Code:** 401 _UNAUTHORIZED_
+  - **Content:** `{"error": "Token not provided"}`
 
 - **Chamada de exemplo:**
 
